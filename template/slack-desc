@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+        |-----handy-ruler------------------------------------------------------|
+template: template (Solaris Porting Layer (TEMPLATE))
+template:
+template: The Solaris Porting Layer (TEMPLATE) is a Linux kernel module which
+template: provides many of the Solaris kernel APIs. This shim layer makes
+template: it possible to run Solaris kernel code in the Linux kernel with
+template: relatively minimal modification. This can be particularly useful
+template: when you want to track upstream Solaris development closely and
+template: don't want the overhead of maintaining a large patch which converts
+template: Solaris primitives to Linux primitives.
+template:
+template: Home: http://zfsonlinux.org/
