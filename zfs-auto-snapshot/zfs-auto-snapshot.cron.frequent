@@ -1,0 +1,1 @@
+*/15 * * * * /sbin/zfs-auto-snapshot -q -g --label=frequent --keep=4  //

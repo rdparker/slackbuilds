@@ -21,7 +21,7 @@ ARCH=${ARCH:-x86_64} # the architecture on which you want to build your package
 # First digit is the build number, which specifies how many times it
 # has been built.  Second string is the short form of the authors
 # name, typically three initials.
-BUILD=${BUILD:-1_rdp}
+BUILD=${BUILD:-2_rdp}
 
 # The application's name
 APP=zfs-auto-snapshot
@@ -60,8 +60,10 @@ chmod -R u+w,go+r-w,a-s .
 # compile the source, but exit if anything goes wrong
 make || exit $?
 
-# Install everything ino the package directory, but exit if anything goes wrong
+# Install everything in the package directory, but exit if anything goes wrong
 make install DESTDIR=$PKG || exit $?
+install $CWD/zfs-auto-snapshot.cron.frequent \
+    $PKG/etc/cron.d/zfs-auto-snapshot || exit $?
 
 # Create a directory for documentation
 mkdir -p $PKG/usr/doc/$APP-$VERSION
