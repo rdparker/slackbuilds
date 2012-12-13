@@ -275,6 +275,7 @@ find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
 # Add a package description:
 mkdir -p $PKG/install
 cat $SRCDIR/slack-desc > $PKG/install/slack-desc
+cat $SRCDIR/slack-required > $PKG/install/slack-required
 if [ -f $SRCDIR/doinst.sh ]; then
   cat $SRCDIR/doinst.sh >> $PKG/install/doinst.sh
 fi
@@ -286,6 +287,7 @@ cd $OUTPUT
 md5sum ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz} > ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz}.md5
 cd -
 cat $PKG/install/slack-desc | grep "^${PRGNAM}" > $OUTPUT/${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.txt
+cat $PKG/install/slack-required > $OUTPUT/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.dep
 
 # Restore the original umask:
 umask ${_UMASK_}
