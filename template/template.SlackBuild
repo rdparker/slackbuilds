@@ -228,7 +228,7 @@ fi
 # Determine the rc.modules to use:
 if [ -f etc/rc.d/rc.modules.local ]; then
   RCMODULES="etc/rc.d/rc.modules.local"
-elif [ -f etc/rc.d/rc.modules-$KVER) ]; then
+elif [ -f etc/rc.d/rc.modules-$KVER ]; then
   RCMODULES="etc/rc.d/rc.modules-$KVER"
 else
   RCMODULES="etc/rc.d/rc.modules"
