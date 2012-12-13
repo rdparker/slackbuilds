@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+   |-----handy-ruler------------------------------------------------------|
+spl: spl (Solaris Porting Layer (SPL))
+spl:
+spl: The Solaris Porting Layer (SPL) is a Linux kernel module which
+spl: provides many of the Solaris kernel APIs. This shim layer makes
+spl: it possible to run Solaris kernel code in the Linux kernel with
+spl: relatively minimal modification. This can be particularly useful
+spl: when you want to track upstream Solaris development closely and
+spl: don't want the overhead of maintaining a large patch which converts
+spl: Solaris primitives to Linux primitives.
+spl:
+spl: Home: http://zfsonlinux.org/

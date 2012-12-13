@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+   |-----handy-ruler------------------------------------------------------|
+zfs: ZFS on Linux (Native ZFS for Linux)
+zfs:
+zfs: Native ZFS for Linux!  ZFS is an advanced file system and volume
+zfs: manager which was originally developed for Solaris.  It has been
+zfs: successfully ported to FreeBSD and now there is a functional
+zfs: Linux ZFS kernel port too.  The port currently includes a fully
+zfs: functional and stable SPA, DMU, and ZVOL with a ZFS Posix Layer
+zfs: (ZPL) on the way!
+zfs:
+zfs: Home: http://zfsonlinux.org/
+zfs:
