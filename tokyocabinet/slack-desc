@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+            |-----handy-ruler------------------------------------------------------|
+tokyocabinet: tokyocabinet (Tokyo Cabinet: a modern implementation of DBM)
+tokyocabinet:
+tokyocabinet: Tokyo Cabinet is a library of routines for managing a database. The
+tokyocabinet: database is a simple data file containing records, each is a pair of
+tokyocabinet: a key and a value. Every key and value is serial bytes with variable
+tokyocabinet: length. Both binary data and character string can be used as a key
+tokyocabinet: and a value. There is neither concept of data tables nor data
+tokyocabinet: types. Records are organized in hash table, B+ tree, or fixed-length
+tokyocabinet: array.
+tokyocabinet:
+tokyocabinet: Home: http://fallabs.com/tokyocabinet/
