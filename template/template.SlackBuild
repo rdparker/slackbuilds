@@ -37,7 +37,7 @@
 #                   * Create an SlackBuild script.
 #
 # Run 'sh spl.SlackBuild' to build a Slackware package.
-# The package (.tgz) and .txt file as well as build logs are created in /tmp .
+# The package (.txz) and .txt file as well as build logs are created in /tmp .
 # Install it using 'installpkg'.
 #
 # -----------------------------------------------------------------------------
@@ -280,9 +280,9 @@ fi
 
 # Build the package:
 cd $PKG
-makepkg --linkadd y --chown n $OUTPUT/${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-tgz} 2>&1 | tee $OUTPUT/makepkg-${PRGNAM}.log
+makepkg --linkadd y --chown n $OUTPUT/${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz} 2>&1 | tee $OUTPUT/makepkg-${PRGNAM}.log
 cd $OUTPUT
-md5sum ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-tgz} > ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-tgz}.md5
+md5sum ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz} > ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz}.md5
 cd -
 cat $PKG/install/slack-desc | grep "^${PRGNAM}" > $OUTPUT/${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.txt
 
