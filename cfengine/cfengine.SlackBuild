@@ -29,8 +29,10 @@
 # URL:         http://cfengine.com
 # Needs:
 # Changelog:
-# 3.4.1-2:     29/Nov/2012 by Ron Parker <rdparker@gmail.com>
+# 3.4.1-1:     13/Dec/2012 by Ron Parker <rdparker@gmail.com>
 #              * Initial build.
+# 3.4.1-2:     13/Dec/2012 by Ron Parker <rdparker@gmail.com>
+#              * Make static executables and simplify configuration.
 #
 # Run 'sh cfengine.SlackBuild' to build a Slackware package.
 # The package (.txz) and .txt file as well as build logs are created in /tmp .
@@ -42,7 +44,7 @@
 
 PRGNAM=cfengine
 VERSION=${VERSION:-3.4.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 # 'make' can run jobs in parallel for added speed. The number should be higher
 # than the number of cores/virtual CPU's in your system:
 NUMJOBS=${NUMJOBS:" -j9 "}
@@ -82,13 +84,13 @@ fi
 
 case "$ARCH" in
   i486)   SLKCFLAGS="-O2 -march=i486 -mtune=i686"
-          SLKLDFLAGS=""; LIBDIRSUFFIX=""
+          SLKLDFLAGS="--static -lnsl"; LIBDIRSUFFIX=""
           ;;
   x86_64) SLKCFLAGS="-O2 -fPIC"
-          SLKLDFLAGS="-L/usr/lib64"; LIBDIRSUFFIX="64"
+          SLKLDFLAGS="--static -L/usr/lib64 -lnsl"; LIBDIRSUFFIX="64"
           ;;
   *)      SLKCFLAGS="-O2"
-          SLKLDFLAGS=""; LIBDIRSUFFIX=""
+          SLKLDFLAGS="--static -lnsl"; LIBDIRSUFFIX=""
           ;;
 esac
 
@@ -163,21 +165,23 @@ cd ${PRGNAM}-${VERSION}
 chown -R root:root .
 chmod -R u+w,go+r-w,a+X-s .
 
+# Patch up configuration to enable passing LIBS into CF3_WITH_LIBRARY
+# and regenerate configure.
+#
+# TODO: Handle a static liblzma so that XML is supported.  Slackware
+# explicitly disable's static builds in its xz compile.
+sed -i '/LIBS=""/d' m4/cf3_with_library.m4
+autoconf
+
 echo Building ...
+LIBS="-lnsl -lbz2 -lz -lm -ldl" \
 LDFLAGS="$SLKLDFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 CFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/var/cfengine \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --localstatedir=/var \
-  --sysconfdir=/etc \
-  --mandir=/usr/man \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --enable-shared \
-  --disable-static \
-  --program-prefix= \
-  --program-suffix= \
+  --enable-static \
+  --disable-shared \
   --build=$ARCH-slackware-linux \
   2>&1 | tee $OUTPUT/configure-${PRGNAM}.log
 
