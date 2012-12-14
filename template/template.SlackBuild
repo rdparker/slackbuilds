@@ -72,9 +72,8 @@ KVER=${KVER:-$(uname -r)}
 KSRC=${KSRC:-/lib/modules/${KVER}/build}
 
 # Input URL: http://github.com/downloads/zfsonlinux/spl/spl-0.6.0-rc12.tar.gz
-SOURCE="$SRCDIR/${PRGNAM}-${VERSION}.tar.gz"
-SRCURL="http://github.com/downloads/zfsonlinux/${PRGNAM}/${PRGNAM}-${VERSION}.tar.gz"
-
+SOURCE[0]="$SRCDIR/${PRGNAM}-${VERSION}.tar.gz"
+SRCURL[0]="http://github.com/downloads/zfsonlinux/${PRGNAM}/${PRGNAM}-${VERSION}.tar.gz"
 
 ##
 ## --- with a little luck, you won't have to edit below this point --- ##
@@ -123,24 +122,26 @@ rm -rf $OUTPUT/{configure,make,install,error,makepkg}-$PRGNAM.log
                           # remove old log files
 
 # Source file availability:
-if ! [ -f ${SOURCE} ]; then
-  echo "Source '$(basename ${SOURCE})' not available yet..."
-  # Check if the $SRCDIR is writable at all - if not, download to $OUTPUT
-  [ -w "$SRCDIR" ] || SOURCE="$OUTPUT/$(basename $SOURCE)"
-  if [ -f ${SOURCE} ]; then echo "Ah, found it!"; continue; fi
-  if ! [ "x${SRCURL}" == "x" ]; then
-    echo "Will download file to $(dirname $SOURCE)"
-    wget -nv -T 20 -O "${SOURCE}" "${SRCURL}" || true
-    if [ $? -ne 0 -o ! -s "${SOURCE}" ]; then
-      echo "Downloading '$(basename ${SOURCE})' failed... aborting the build."
-      mv -f "${SOURCE}" "${SOURCE}".FAIL
+for (( i = 0; i < ${#SOURCE[*]}; i++ )) ; do
+  if ! [ -f ${SOURCE[$i]} ]; then
+    echo "Source '$(basename ${SOURCE[$i]})' not available yet..."
+    # Check if the $SRCDIR is writable at all - if not, download to $OUTPUT
+    [ -w "$SRCDIR" ] || SOURCE[$i]="$OUTPUT/$(basename ${SOURCE[$i]})"
+    if [ -f ${SOURCE[$i]} ]; then echo "Ah, found it!"; continue; fi
+    if ! [ "x${SRCURL[$i]}" == "x" ]; then
+      echo "Will download file to $(dirname $SOURCE[$i])"
+      wget -nv -T 20 -O "${SOURCE[$i]}" "${SRCURL[$i]}" || true
+      if [ $? -ne 0 -o ! -s "${SOURCE[$i]}" ]; then
+        echo "Fail to download '$(basename ${SOURCE[$i]})'. Aborting the build."
+        mv -f "${SOURCE[$i]}" "${SOURCE[$i]}".FAIL
+        exit 1
+      fi
+    else
+      echo "File '$(basename ${SOURCE[$i]})' not available. Aborting the build."
       exit 1
     fi
-  else
-    echo "File '$(basename ${SOURCE})' not available... aborting the build."
-    exit 1
   fi
-fi
+done
 
 if [ "$P1" == "--download" ]; then
   echo "Download complete."
@@ -162,12 +163,12 @@ fi
 
 cd $TMP/tmp-$PRGNAM
 echo "Extracting the source archive(s) for $PRGNAM..."
-if $(file ${SOURCE} | grep -qi ": 7-zip"); then
-  7za x ${SOURCE}
-elif $(file ${SOURCE} | grep -qi ": zip"); then
-  unzip ${SOURCE}
+if $(file ${SOURCE[0]} | grep -qi ": 7-zip"); then
+  7za x ${SOURCE[0]}
+elif $(file ${SOURCE[0]} | grep -qi ": zip"); then
+  unzip ${SOURCE[0]}
 else
-  tar -xvf ${SOURCE}
+  tar -xvf ${SOURCE[0]}
 fi
 cd ${PRGNAM}-${VERSION}
 chown -R root:root .
