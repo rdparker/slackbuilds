@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+        |-----handy-ruler------------------------------------------------------|
+cfengine: cfengine (CFEngine 3 Community)
+cfengine:
+cfengine: CFEngine, or the configuration engine is an agent/software robot and
+cfengine: a very high level language for building expert systems to
+cfengine: administrate and configure large computer networks. CFEngine uses the
+cfengine: idea of classes and a primitive form of intelligence to define and
+cfengine: automate the configuration and maintenance of system state, for small
+cfengine: to huge configurations. CFEngine is designed to be a part of a
+cfengine: computer immune system.
+cfengine:
+cfengine: Home: http://cfengine.com
