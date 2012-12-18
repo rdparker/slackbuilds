@@ -54,7 +54,7 @@ case "$ARCH" in
 esac
 
 PRGNAM=git-annex
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 # The TAG is a unique identifier for all your Slackware packages.
 # Use your initials as the value for TAG for instance.
 TAG=${TAG:-_rdp}
@@ -180,9 +180,15 @@ install -m 644 $SRCDIR/git-annex.desktop ${PKG}/usr/share/applications
 sed -i "s=/usr/bin/=/usr/lib${LIBDIRSUFFIX}/${PRGNAM}/=" ${PKG}/etc/xdg/autostart/git-annex.desktop
 sed -i "s=/usr/bin/=/usr/lib${LIBDIRSUFFIX}/${PRGNAM}/=" ${PKG}/usr/share/applications/git-annex.desktop
 
-# Put a link in the path
+# Put a script in the path
 mkdir ${PKG}/usr/bin
-ln -s /usr/bin/lib${LIBDIRSUFFIX}/${PRGNAM} ${PKG}/usr/bin
+cat <<END >> $PKG/usr/bin/git-annex
+#! /bin/sh
+
+exec /usr/lib${LIBDIRSUFFIX}/${PRGNAM}/\$(basename "\$0") "\$@"
+END
+chmod 755 $PKG/usr/bin/git-annex
+ln -s $PKG/usr/bin/git-annex $PKG/usr/bin/git-annex-webapp
 
 # Add this to the doinst.sh:
 mkdir -p $PKG/install
