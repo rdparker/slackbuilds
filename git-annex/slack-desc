@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+         |-----handy-ruler------------------------------------------------------|
+git-annex: git-annex (Manage files with git, w/o checking their content into git)
+git-annex:
+git-annex: Git-annex manages files with git, without checking in their contents.
+git-annex: While that may seem paradoxical, it is useful when dealing with files
+git-annex: larger than git can easily handle due to time or space limits.  Even
+git-annex: without content tracking, being able to manage files with git, move
+git-annex: them around and delete files with versioned directory trees, and use
+git-annex: branches and distributed clones, are all very handy reasons to use
+git-annex: git.  Annexed files can co-exist in the same repository with regularly
+git-annex: versioned files, which is handy for maintaining content associated
+git-annex: with annexed files but that benefits from full revision control.

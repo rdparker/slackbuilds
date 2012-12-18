@@ -1,0 +1,37 @@
+Git Annex (Manage files with git, w/o checking their content into git)
+----------------------------------------------------------------------
+
+Here's how to install git-annex on Slackware.
+
+
+First, go to the install page on the git-annex site:
+
+http://git-annex.branchable.com/install/
+
+Click the download prebuilt tarball link, and select either the i386
+or amd64 standalone package.
+
+
+
+Then, with the git-annex-standalone-i385.tar.gz or
+google-chrome-stable_current_i386.deb package in the same directory as
+the git-annex.SlackBuild script, run the script as root to convert the
+standalone archive to a Slackware .txz:
+
+./git-annex.SlackBuild
+
+This will produce a Slackware compatible .txz package.  The exact
+version number in the package filename will depend on the version
+of git-annex found in the standalone package, but it will be something
+like:  git-annex-3.20121211-x86_64-1_rdp.txz
+
+You'll find the output package in the /tmp directory.
+
+
+Then, install the package (again as root):
+
+cd /tmp
+upgradepkg --install-new git-annex-3.20121211-x86_64-1_rdp.txz
+
+
+Enjoy!  :-)
