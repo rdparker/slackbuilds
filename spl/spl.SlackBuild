@@ -35,6 +35,8 @@
 #                   * Initial build.
 # 0.6.0-rc12-2:     12/Dec/2012 by Ron Parker <rdparker@gmail.com>
 #                   * Create a SlackBuild script.
+# 0.6.0-rc13-1:     27/Dec/2012 by Ron Parker <rdparker@gmail.com>
+#                   * Update version.
 #
 # Run 'sh spl.SlackBuild' to build a Slackware package.
 # The package (.txz) and .txt file as well as build logs are created in /tmp .
@@ -45,8 +47,8 @@
 # Set initial variables:
 
 PRGNAM=spl
-VERSION=${VERSION:-0.6.0-rc12}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-0.6.0-rc13}
+BUILD=${BUILD:-1}
 # 'make' can run jobs in parallel for added speed. The number should be higher
 # than the number of cores/virtual CPU's in your system:
 NUMJOBS=${NUMJOBS:" -j9 "}
@@ -71,7 +73,7 @@ KSRC=${KSRC:-/lib/modules/${KVER}/build}
 
 # Input URL: http://github.com/downloads/zfsonlinux/spl/spl-0.6.0-rc12.tar.gz
 SOURCE="$SRCDIR/${PRGNAM}-${VERSION}.tar.gz"
-SRCURL="http://github.com/downloads/zfsonlinux/${PRGNAM}/${PRGNAM}-${VERSION}.tar.gz"
+SRCURL="http://zfsonlinux.com/downloads/${VERSION}/${PRGNAM}-${VERSION}.tar.gz"
 
 
 ##
