@@ -1,0 +1,385 @@
+This file was generated from the content of GregorR's Bitbucket repo[1]
+as of commit d7d597c dated 2011-04-25.  It simplifies building Open
+Watcom on Linux, especially 64-bit variants.
+
+[1] https://bitbucket.org/GregorR/openwatcom/wiki/Home
+
+diff -Naur OW19.orig/Makefile OW19/Makefile
+--- OW19.orig/Makefile	1969-12-31 18:00:00.000000000 -0600
++++ OW19/Makefile	2013-01-02 13:32:43.867503280 -0600
+@@ -0,0 +1,13 @@
++DESTDIR=/
++
++all: rel2
++
++rel2:
++	bash buildfull.sh
++
++clean:
++	bash cleanfull.sh
++	rm -rf rel2/
++
++install:
++	bash dist.sh "$(DESTDIR)"
+diff -Naur OW19.orig/bld/build/local/local.mif OW19/bld/build/local/local.mif
+--- OW19.orig/bld/build/local/local.mif	2010-06-02 13:10:59.000000000 -0500
++++ OW19/bld/build/local/local.mif	2013-01-02 13:32:43.867503280 -0600
+@@ -97,13 +97,13 @@
+ !ifdef __LINUX__
+ !ifdef bootstrap
+ 
+-cc = gcc
+-cpp = gcc
++cc = gcc -m32
++cpp = gcc -m32
+ cl = $(cc)
+ bld_incs = $(bld_extra_incs) -I$(watcom_dir)/h
+-bld_cl = gcc $(bld_incs)
+-bld_cc = gcc $(bld_incs)
+-bld_link = gcc
++bld_cl = gcc -m32 $(bld_incs)
++bld_cc = gcc -m32 $(bld_incs)
++bld_link = gcc -m32
+ librarian = ar
+ libflags = crs $^@
+ 
+diff -Naur OW19.orig/bld/lang.ctl OW19/bld/lang.ctl
+--- OW19.orig/bld/lang.ctl	2010-06-02 13:16:52.000000000 -0500
++++ OW19/bld/lang.ctl	2013-01-02 13:32:43.867503280 -0600
+@@ -23,7 +23,7 @@
+ [ INCLUDE <DEVDIR>/cc/wcl/prereq.ctl ]
+ [ INCLUDE <DEVDIR>/wasm/prereq.ctl ]
+ [ INCLUDE <DEVDIR>/causeway/prereq.ctl ]
+-[ INCLUDE <DEVDIR>/w32loadr/prereq.ctl ]
++# [ INCLUDE <DEVDIR>/w32loadr/prereq.ctl ]
+ [ INCLUDE <DEVDIR>/yacc/prereq.ctl ]
+ [ INCLUDE <DEVDIR>/re2c/prereq.ctl ]
+ # [ INCLUDE <DEVDIR>/wgml/prereq.ctl ]
+@@ -147,8 +147,8 @@
+ [ INCLUDE <DEVDIR>/cmdedit/lang.ctl ]
+ [ INCLUDE <DEVDIR>/brinfo/lang.ctl ]
+ [ INCLUDE <DEVDIR>/trap/lang.ctl ]
+-[ INCLUDE <DEVDIR>/dip/lang.ctl ]
+-[ INCLUDE <DEVDIR>/mad/lang.ctl ]
++# [ INCLUDE <DEVDIR>/dip/lang.ctl ]
++# [ INCLUDE <DEVDIR>/mad/lang.ctl ]
+ [ INCLUDE <DEVDIR>/wv/lang.ctl ]
+ [ INCLUDE <DEVDIR>/wsample/lang.ctl ]
+ [ INCLUDE <DEVDIR>/wprof/lang.ctl ]
+@@ -156,11 +156,11 @@
+ [ INCLUDE <DEVDIR>/wtouch/lang.ctl ]
+ [ INCLUDE <DEVDIR>/wstrip/lang.ctl ]
+ [ INCLUDE <DEVDIR>/editdll/lang.ctl ]
+-[ INCLUDE <DEVDIR>/browser/lang.ctl ]
++# [ INCLUDE <DEVDIR>/browser/lang.ctl ]
+ [ INCLUDE <DEVDIR>/idebatch/lang.ctl ]
+-[ INCLUDE <DEVDIR>/viper/lang.ctl ]
++# [ INCLUDE <DEVDIR>/viper/lang.ctl ]
+ [ INCLUDE <DEVDIR>/mstools/lang.ctl ]
+-[ INCLUDE <DEVDIR>/viprdemo/lang.ctl ]
++# [ INCLUDE <DEVDIR>/viprdemo/lang.ctl ]
+ #[ INCLUDE <DEVDIR>/online/lang.ctl ]
+ [ INCLUDE <DEVDIR>/posix/lang.ctl ]
+ [ INCLUDE <DEVDIR>/cpp/lang.ctl ]
+diff -Naur OW19.orig/bld/re2c/master.mif OW19/bld/re2c/master.mif
+--- OW19.orig/bld/re2c/master.mif	2010-06-02 13:22:24.000000000 -0500
++++ OW19/bld/re2c/master.mif	2013-01-02 13:32:43.868503281 -0600
+@@ -21,7 +21,7 @@
+ 
+ !ifdef bootstrap
+ # awful hack to link this executable; if you know how to do this right, please do!
+-cl = g++
++cl = g++ -m32
+ !endif
+ 
+ !include exetarg.mif
+diff -Naur OW19.orig/bld/w32api/master.mif OW19/bld/w32api/master.mif
+--- OW19.orig/bld/w32api/master.mif	2010-06-02 13:27:26.000000000 -0500
++++ OW19/bld/w32api/master.mif	2013-01-02 13:32:43.868503281 -0600
+@@ -13,11 +13,7 @@
+ !endif
+ 
+ # This should be including the newly built headers when bootstrapping.
+-!ifdef bootstrapmode
+-inc_dirs = -I"$(dev_dir)/w32api/nt/ddk" -I"$(dev_dir)/w32api/nt/directx"
+-!else
+-inc_dirs = -I"$(lang_root)/h/nt/ddk" -I"$(lang_root)/h/nt/directx"
+-!endif
++inc_dirs = -I"$(dev_dir)/w32api/nt" -I"$(dev_dir)/w32api/nt/ddk" -I"$(dev_dir)/w32api/nt/directx"
+ 
+ splice = wsplice -i$(hdr_dir) -i$(root_dir)/include $[@ $^@
+ rsplice = wsplice -i$(hdr_dir) -i$(root_dir)/include -kRESOURCE $[@ $^@
+diff -Naur OW19.orig/build.sh OW19/build.sh
+--- OW19.orig/build.sh	2010-06-02 13:31:02.000000000 -0500
++++ OW19/build.sh	2013-01-02 13:32:43.869503281 -0600
+@@ -13,10 +13,10 @@
+     cp -p `which touch` $DEVDIR/build/binl/wtouch
+ fi
+ cd bld/wmake
+-$MAKE -f gnumake
++$MAKE -f gnumake CC="gcc -m32"
+ mkdir -p ../builder/$OBJDIR
+ cd ../builder/$OBJDIR
+-wmake -h -f ../linux386/makefile builder.exe bootstrap=1
++wmake -h -f ../linux386/makefile builder.exe bootstrap=1 CC="gcc -m32"
+ cd ../..
+ export BUILDMODE=bootstrap
+ builder rel2 os_linux
+diff -Naur OW19.orig/buildfull.sh OW19/buildfull.sh
+--- OW19.orig/buildfull.sh	1969-12-31 18:00:00.000000000 -0600
++++ OW19/buildfull.sh	2013-01-02 13:32:43.869503281 -0600
+@@ -0,0 +1,120 @@
++#!/bin/bash
++cd `dirname "$0"`
++
++die() {
++    echo "$1"
++    exit 1
++}
++
++builderd() {
++    pushd "$1"
++    shift
++    builder "$@" || die 'Failed to build '"$1"
++    popd
++}
++
++buildd() {
++    DIR="$1"
++    shift
++    builderd "$DIR" rel2 "$@"
++}
++
++export PATH="$PWD/rel2/binl:$PATH"
++export WATCOM="$PWD/rel2"
++export INCLUDE="$PWD/rel2/lh"
++
++# First do the bootstrap build
++if [ ! -e rel2/binl/owcc ]
++then
++    bbuild="bash build.sh"
++    if linux32 true
++    then
++        bbuild="linux32 bash build.sh"
++    fi
++    $bbuild || ( rm -rf rel2 ; die 'Failed to build bootstrap' )
++fi
++
++. setvars.sh
++cd bld
++
++builder clean
++find . -name prebuild | xargs rm -rf
++find . -name bootstrp | xargs rm -rf
++find . -name '*.obj' | xargs rm -f
++
++# Circular dependencies are hell, just use the host wlib
++for i in wlib wcl386 wasm wrc
++do
++    cp -f ../rel2/binl/$i build/binl/b$i
++done
++
++# Force the C library and its dependencies first
++buildd builder
++buildd hdr
++buildd os2api
++buildd w16api
++buildd w32api
++buildd clib
++buildd mathlib
++buildd emu
++
++# Then C++lib/rtdll
++buildd dwarf
++buildd cfloat
++buildd cg
++buildd owl
++pushd yacc/linux386 && ( wmake || die 'Failed to build yacc' ) && cp yacc.exe ../../build/binl/byacc && popd
++pushd re2c/linux386 && ( wmake || die 'Failed to build re2c' ) && cp re2c.exe ../../build/binl/re2c && popd
++pushd sdk/rc && builder rel2 ; popd # No error-check here
++buildd as
++buildd plusplus/cpplib
++buildd rtdll
++
++# Other stuff
++buildd emu86
++pushd ../contrib/wattcp/src && ( wmake || die 'Failed to build wattcp' ) && popd
++
++# Then build everything else
++builder rel2 || die 'Failed to build world'
++
++# Including the stuff we had to prevent it from building before
++buildd w32loadr
++buildd dip
++buildd mad
++
++cd ..
++
++# Copy stubs from binw to binl
++cp -f rel2/binw/*stub* rel2/binl/
++
++# Copy extras
++cp -f rel2-extras/binl/* rel2/binl/ &&
++chmod 0755 rel2/binl/{owar,owranlib} &&
++ln -sf owar rel2/binl/ar &&
++ln -sf owranlib rel2/binl/ranlib ||
++die 'Failed to copy rel2-extras'
++
++# Then make a use script for convenience
++echo '#!/bin/bash
++ORIGDIR=`pwd`
++cd `dirname "$BASH_SOURCE"`
++WATCOM=`pwd`
++export WATCOM
++cd "$ORIGDIR"
++unset ORIGDIR
++PATH="$WATCOM/binl:$PATH"
++export PATH
++INCLUDE="$WATCOM/lh"
++export INCLUDE' > rel2/use.sh
++
++echo '#!/bin/bash
++ORIGDIR=`pwd`
++cd `dirname "$BASH_SOURCE"`
++WATCOM=`pwd`
++export WATCOM
++cd "$ORIGDIR"
++unset ORIGDIR
++PATH="$WATCOM/binl:$PATH"
++export PATH
++INCLUDE="$WATCOM/h"
++export INCLUDE' > rel2/usedos.sh
+diff -Naur OW19.orig/cleanfull.sh OW19/cleanfull.sh
+--- OW19.orig/cleanfull.sh	1969-12-31 18:00:00.000000000 -0600
++++ OW19/cleanfull.sh	2013-01-02 13:32:43.869503281 -0600
+@@ -0,0 +1,30 @@
++#!/bin/bash
++cd `dirname "$0"`
++
++die() {
++    echo "$1"
++    exit 1
++}
++
++rmobj() {
++    find . -name '*.obj' -o -name '*.lo1' -o -name '*.log' |
++    xargs rm -f 2> /dev/null
++}
++
++. setvars.sh
++cd bld
++
++pushd w32loadr && builder clean ; popd
++pushd dip && builder clean ; popd
++pushd mad && builder clean ; popd
++builder clean
++rm -f build/binl/{builder,wcc386,wcl,wlink,wpp,wpp386,wstrip,wstub.exe,wtouch}
++rm -f re2c/linux386/re2c.{exe,sym}
++rm -f yacc/linux386/yacc.{exe,sym}
++find . -name prebuild | xargs rm -rf
++find . -name bootstrp | xargs rm -rf
++rmobj
++
++cd ../contrib
++rm -f wattcp/lib/wattcpwl.lib
++rmobj
+diff -Naur OW19.orig/dist.sh OW19/dist.sh
+--- OW19.orig/dist.sh	1969-12-31 18:00:00.000000000 -0600
++++ OW19/dist.sh	2013-01-02 13:32:43.870503281 -0600
+@@ -0,0 +1,57 @@
++#!/bin/bash
++cd `dirname "$0"`
++
++OW=openwatcom-1.9.0
++CMD="owar owcc owranlib wasaxp wasm wasmps wasppc wbind wcc wcc386 wccaxp wcl wcl386 wclaxp wclmps wd wdis wdump wfc wfc386 wfl wfl386 whc whelp wipfc wlib wlink wmake wpp wpp386 wprof wrc wsample wstrip wtouch"
++
++die() {
++    echo "$1"
++    exit 1
++}
++
++DESTDIR=.
++if [ "$1" ]
++then
++    DESTDIR="$1"
++fi
++
++# make the root
++mkdir "$DESTDIR"/usr || die 'Failed to mkdir usr'
++
++# we'll put rel2 under usr/lib/openwatcom...
++mkdir -p "$DESTDIR"/usr/lib &&
++cp -af rel2 "$DESTDIR"/usr/lib/$OW ||
++die 'Failed to copy rel2 to usr/lib'
++
++# now make a wrapper script for all the commands
++mkwrapper() {
++    wname="$1"
++    scr="$2"
++    include="$3"
++    echo '#!/bin/bash
++WATCOM=`dirname "$0"`/../lib/'$OW'
++export WATCOM
++'"$scr"'
++
++PATH="$WATCOM/binl:$PATH"
++export PATH
++if [ ! "$INCLUDE" ]
++then
++    '"$include"'
++    export INCLUDE
++fi
++
++exec $WATCOM/binl/$SCR "$@"' > "$DESTDIR"/usr/lib/$OW/$wname || die 'Failed to install '$wname
++    chmod 0755 "$DESTDIR"/usr/lib/$OW/$wname || die 'Failed to make '$wname' +x'
++}
++
++mkwrapper wrapper 'SCR=`basename "$0"`' 'INCLUDE="$WATCOM/lh"'
++mkwrapper dos-wrapper 'SCR=`basename "$0"`; SCR=${SCR/dos-}' 'INCLUDE="$WATCOM/h"'
++
++# now install the individual wrappers
++mkdir -p "$DESTDIR"/usr/bin
++for i in $CMD
++do
++    ln -s ../lib/$OW/wrapper "$DESTDIR"/usr/bin/$i || die 'Failed to install '$i
++    ln -s ../lib/$OW/dos-wrapper "$DESTDIR"/usr/bin/dos-$i || die 'Failed to install dos-'$i
++done
+diff -Naur OW19.orig/rel2-extras/binl/owar OW19/rel2-extras/binl/owar
+--- OW19.orig/rel2-extras/binl/owar	1969-12-31 18:00:00.000000000 -0600
++++ OW19/rel2-extras/binl/owar	2013-01-02 13:32:43.870503281 -0600
+@@ -0,0 +1,28 @@
++#!/bin/bash
++# ar workalike for Open Watcom, creation only
++
++CMD="$1"
++FILE="$2"
++WOPT="-fag"
++shift; shift
++
++# Figure out the command length
++CMDL=${#CMD}
++for (( i = 0; i < CMDL; i++ ))
++do
++    CMDC=${CMD:$i:1}
++    case "$CMDC" in
++        -) ;;
++        [ruq]) ;;
++        c)
++            WOPT="$WOPT -n"
++            ;;
++
++        *)
++            echo 'Unrecognized option '"$CMDC"
++            exit 1
++            ;;
++    esac
++done
++
++exec wlib $WOPT "$FILE" "$@"
+diff -Naur OW19.orig/rel2-extras/binl/owranlib OW19/rel2-extras/binl/owranlib
+--- OW19.orig/rel2-extras/binl/owranlib	1969-12-31 18:00:00.000000000 -0600
++++ OW19/rel2-extras/binl/owranlib	2013-01-02 13:32:43.870503281 -0600
+@@ -0,0 +1,3 @@
++#!/bin/bash
++# ranlib workalike for Open Watcom, does nothing whatsoever
++exit 0

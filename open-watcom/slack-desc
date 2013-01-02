@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+           |-----handy-ruler------------------------------------------------------|
+open-watcom: open-watcom (Open Watcom cross compilers)
+open-watcom:
+open-watcom: Open Watcom is a project of the open source community to maintain and
+open-watcom: enhance the Watcom C, C++, and Fortran cross compilers and tools.  An
+open-watcom: Open Source license from Sybase allows free commercial and
+open-watcom: non-commercial use of Open Watcom.  Work in progress includes
+open-watcom: numerous Unix ports (Linux, FreeBSD, Solaris, OS X), support for new
+open-watcom: processors (AMD64, ARMv7), support for new language features and
+open-watcom: standards, a C++ STL implementation and more.  Join the fun!
+open-watcom:
+open-watcom: Home: http://openwatcom.org/

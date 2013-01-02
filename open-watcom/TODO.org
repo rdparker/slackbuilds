@@ -1,0 +1,10 @@
+
+* TODO Rebuild w/o kernel version in the package name
+
+* DONE Remove the kernel version from the package name
+
+* DONE Check the package for config files
+
+  None.
+
+* TODO Possibly add the patch to the doc directory.
