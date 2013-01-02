@@ -26,8 +26,8 @@
 # Slackware SlackBuild script
 # ===========================
 # By:          Ron Parker <rdparker@gmail.com>
-# For:         clutter (Dynamic user interface library)
-# Descr:       Clutter
+# For:         clutter
+# Descr:       clutter (Dynamic user interface library)
 # URL:         http://www.clutter-project.org
 # Needs:
 # Changelog:
