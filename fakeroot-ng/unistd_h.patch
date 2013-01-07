@@ -1,0 +1,20 @@
+--- fakeroot-ng-0.16/parent.cpp.orig	2009-06-23 12:25:42.000000000 -0500
++++ fakeroot-ng-0.16/parent.cpp	2013-01-05 10:33:13.919264000 -0600
+@@ -40,6 +40,7 @@
+ #include <limits.h>
+ #include <string.h>
+ #include <stdlib.h>
++#include <unistd.h>
+ 
+ #include "arch/platform.h"
+ 
+--- fakeroot-ng-0.16/file.cpp.orig	2009-05-22 10:41:43.000000000 -0500
++++ fakeroot-ng-0.16/file.cpp	2013-01-05 10:53:49.780535000 -0600
+@@ -29,6 +29,7 @@
+ #include <limits.h>
+ 
+ #include <string.h>
++#include <unistd.h>
+ 
+ #include "syscalls.h"
+ #include "file_lie.h"

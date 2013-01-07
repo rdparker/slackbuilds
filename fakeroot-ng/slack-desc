@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+           |-----handy-ruler------------------------------------------------------|
+fakeroot-ng: fakeroot-ng (Gives a fake root environment)
+fakeroot-ng:
+fakeroot-ng: This is a reimplementation of the fakeroot command. Just like it,
+fakeroot-ng: anything run within the fake root command will assume it is running
+fakeroot-ng: as root, but The technology supports intercepting the "open" system
+fakeroot-ng: call simulating the "chroot" command reliably.  Another important
+fakeroot-ng: difference is that it can fool applications that do not perform
+fakeroot-ng: system calls through glibc, such as statically linked executables and
+fakeroot-ng: programs written in some non-C languages, like the latest Sun JDK).
+fakeroot-ng:
+fakeroot-ng: Home: http://sourceforge.net/projects/fakerootng
