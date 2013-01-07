@@ -37,6 +37,8 @@
 #                   * Create a SlackBuild script.
 # 0.6.0-rc13-1:     27/Dec/2012 by Ron Parker <rdparker@gmail.com>
 #                   * Update version.
+# 0.6.0.rc13-2:     27/Dec/2012 by Ron Parker <rdparker@gmail.com>
+#                   * Fix version naming scheme.
 #
 # Run 'sh spl.SlackBuild' to build a Slackware package.
 # The package (.txz) and .txt file as well as build logs are created in /tmp .
@@ -48,7 +50,8 @@
 
 PRGNAM=spl
 VERSION=${VERSION:-0.6.0-rc13}
-BUILD=${BUILD:-1}
+PKG_VERSION=${PKG_VERSION:-0.6.0.rc13}
+BUILD=${BUILD:-2}
 # 'make' can run jobs in parallel for added speed. The number should be higher
 # than the number of cores/virtual CPU's in your system:
 NUMJOBS=${NUMJOBS:" -j9 "}
@@ -262,11 +265,11 @@ fi
 
 # Build the package:
 cd $PKG
-makepkg --linkadd y --chown n $OUTPUT/${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz} 2>&1 | tee $OUTPUT/makepkg-${PRGNAM}.log
+makepkg --linkadd y --chown n $OUTPUT/${PRGNAM}-${PKG_VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz} 2>&1 | tee $OUTPUT/makepkg-${PRGNAM}.log
 cd $OUTPUT
-md5sum ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz} > ${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz}.md5
+md5sum ${PRGNAM}-${PKG_VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz} > ${PRGNAM}-${PKG_VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.${PKGTYPE:-txz}.md5
 cd -
-cat $PKG/install/slack-desc | grep "^${PRGNAM}" > $OUTPUT/${PRGNAM}-${VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.txt
+cat $PKG/install/slack-desc | grep "^${PRGNAM}" > $OUTPUT/${PRGNAM}-${PKG_VERSION}_$(echo $KVER | tr - _)-${ARCH}-${BUILD}${TAG}.txt
 
 # Restore the original umask:
 umask ${_UMASK_}
