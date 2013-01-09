@@ -33,6 +33,10 @@
 # Changelog:
 # verder-1:     18/Dec/2012 by Ron Parker <rdparker@gmail.com>
 #              * Initial build.
+# 3.20130102-2:	02/Jan/2012 by Ron Parker <rdparker@gmail.com>
+#		* Update to version 3.20130102.
+# 3.20130102-3:	08/Jan/2012 by Ron Parker <rdparker@gmail.com>
+#		* Update to minor update of 7 January 2013
 #
 # Run 'sh git-annex.SlackBuild' to build a Slackware package.
 # The package (.txz) and .txt file as well as build logs are created in /tmp .
@@ -54,7 +58,7 @@ case "$ARCH" in
 esac
 
 PRGNAM=git-annex
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 # The TAG is a unique identifier for all your Slackware packages.
 # Use your initials as the value for TAG for instance.
 TAG=${TAG:-_rdp}
