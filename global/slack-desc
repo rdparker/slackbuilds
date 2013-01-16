@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+      |-----handy-ruler------------------------------------------------------|
+global: global (Source code search and browse tools)
+global:
+global: GNU GLOBAL is a source code tag system that works the across diverse
+global: environments. Currently, it supports the following: command line,
+global: and the 'globash' query subshell, vim plugin, vi clones,
+global: less, emacs, web browser.  Supported languages are C, C++, yacc
+global: and Java. You can locate a specified function in the source files
+global: and move there easily. It is especially useful for hacking large
+global: projects containing many subdirectories, many '#ifdef'
+global: and many main() functions, like X or kernel source.
+global: Home: http://www.gnu.org/software/global/
