@@ -37,6 +37,8 @@
 #		* Update to version 3.20130102.
 # 3.20130102-3:	08/Jan/2012 by Ron Parker <rdparker@gmail.com>
 #		* Update to minor update of 7 January 2013
+# 3.20130114-3:	14/Jan/2012 by Ron Parker <rdparker@gmail.com>
+#		* Update to minor 14 January 2013
 #
 # Run 'sh git-annex.SlackBuild' to build a Slackware package.
 # The package (.txz) and .txt file as well as build logs are created in /tmp .
