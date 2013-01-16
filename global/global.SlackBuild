@@ -33,6 +33,8 @@
 # Changelog:
 # 6.2.7-1:     15/Jan/2013 by Ron Parker <rdparker@gmail.com>
 #              * Initial build.
+# 6.2.7-2:     15/Jan/2013 by Ron Parker <rdparker@gmail.com>
+#              * Handle the info file correctly.
 #
 # Run 'sh global.SlackBuild' to build a Slackware package.
 # The package (.txz) and .txt file as well as build logs are created in /tmp .
@@ -44,7 +46,7 @@
 
 PRGNAM=global
 VERSION=${VERSION:-6.2.7}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 # 'make' can run jobs in parallel for added speed. The number should be higher
 # than the number of cores/virtual CPU's in your system:
 NUMJOBS=${NUMJOBS:" -j4 "}
@@ -200,12 +202,14 @@ if [ -d $PKG/usr/man ]; then
   for i in $(find $PKG/usr/man -type l -name "*.?") ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 fi
 
-# Compress info pages and remove the package's dir file:
+# Move info pages to the right place, compress them and remove the
+# package's dir file:
+mkdir -p $PKG/usr/info
+mv $PKG/usr/share/info/* $PKG/usr/info
+rmdir $PKG/usr/share/info
 if [ -d $PKG/usr/info ]; then
   rm -f $PKG/usr/info/dir
   gzip -9f $PKG/usr/info/*.info*
-  # If any info files are present, consider adding this to a doinst.sh:
-  # chroot . install-info /usr/info/XXXXX.info.gz /usr/info/dir 2> /dev/null
 fi
 
 # Strip binaries (if any):
@@ -218,6 +222,9 @@ cat $SRCDIR/slack-desc > $PKG/install/slack-desc
 if [ -f $SRCDIR/doinst.sh ]; then
   cat $SRCDIR/doinst.sh >> $PKG/install/doinst.sh
 fi
+cat <<EOF >> $PKG/install/doinst.sh
+chroot . install-info /usr/info/global.info.gz /usr/info/dir 2> /dev/null
+EOF
 
 # Build the package:
 cd $PKG
