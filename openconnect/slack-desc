@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+           |-----handy-ruler------------------------------------------------------|
+openconnect: openconnect (Open client for Cisco AnyConnect VPN)
+openconnect:
+openconnect: OpenConnect is a client for Cisco's AnyConnect SSL VPN, which
+openconnect: is supported by the ASA5500 Series, by IOS 12.4(9)T or later on
+openconnect: Cisco SR500, 870, 880, 1800, 2800, 3800, 7200 Series and Cisco
+openconnect: 7301 Routers, and probably others.
+openconnect:
+openconnect: OpenConnect is not officially supported by, or associated in any way
+openconnect: with, Cisco Systems. It just interoperates with their equipment.
+openconnect:
+openconnect: Home: http://www.infradead.org/openconnect
