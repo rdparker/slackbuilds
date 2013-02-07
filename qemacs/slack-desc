@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+      |-----handy-ruler------------------------------------------------------|
+qemacs: qemacs (Quick Emacs)
+qemacs:
+qemacs: QEmacs is a very small but powerful editor. It has an Emacs
+qemacs: look and feel. Supports larger-than-memory files. Almost full
+qemacs: UTF8 support, Arabic and Indic are a work-in-progress. WYSIWYG
+qemacs: HTML/XML/CSS2/DocBook editing. Auto-indent, syntax highlighting,
+qemacs: hex editing. Supports VT100 terminals without termcap including
+qemacs: double wide glyphs. X11 support including multiple simultaneous
+qemacs: proportional fonts, X Input methods and Xft anti-aliased fonts. Full
+qemacs: version 150KB. Basic version 49KB.
+qemacs: Home: http://www.bellard.org/qemacs/
