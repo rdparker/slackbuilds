@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+    |-----handy-ruler------------------------------------------------------|
+node: node (Node.js event-based server-side javascript engine)
+node:
+node: Node.js is similar in design to and influenced by systems like
+node: Ruby's Event Machine or Python's Twisted.  It takes
+node: the event model a bit further - it presents the event loop as a
+node: language construct instead of as a library.  Node.js is bundled
+node: with several useful libraries to handle server tasks : System,
+node: Events, Standard I/O, Modules, Timers, Child Processes, POSIX,
+node: HTTP, Multipart Parsing, TCP, DNS, Assert, Path, URL, Query Strings.
+node:
+node: Home: http://nodejs.org
